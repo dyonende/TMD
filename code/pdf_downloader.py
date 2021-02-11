@@ -6,7 +6,18 @@ import pandas as pd
 import requests
 import argparse
 import sys
+import os
 
+def check_path(input_file, output_path):
+    if os.path.isfile(input_file) == False:
+        print(f"{input_file} is not an existing file")
+
+    if output_path[:-1] != '/':
+        output_path+'/'
+        
+    if os.path.isdir(output_path) == False:
+        print(f"{output_path} is not an existing directory")
+        sys.exit()
 
 def collect_links(input_file):
     '''
@@ -32,12 +43,13 @@ def download_pdf(ids, links, output_path):
         filename = id+'.pdf'
         try:            
             r = requests.get(link, stream=True) 
-            with open(output_path+filename, 'wb') as outfile:
-                outfile.write(r.content)
         except KeyboardInterrupt:
             sys.exit()
         except:
             print(id +" failed to download")
+        
+        with open(output_path+filename, 'wb') as outfile:
+                outfile.write(r.content)
           
 
 def main():
@@ -49,6 +61,8 @@ def main():
     args = parser.parse_args()
     input_file = args.input_file
     output_path = args.output_path
+    
+    check_path(input_file, output_path)
 
     ids, links = collect_links(input_file)
     download_pdf(ids, links, output_path)
