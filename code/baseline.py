@@ -127,12 +127,12 @@ def run_classifier(data):
     return predictions, test_gold
     
 def evaluate(predictions, gold):
-    print(precision_recall_fscore_support(gold, predictions, average='micro'))
-    print(confusion_matrix(gold, predictions))
-    
     for i in range(len(gold)):
         print(predictions[i], gold[i])
-    
+        
+        
+    print(precision_recall_fscore_support(gold, predictions, average='micro'))
+    print(confusion_matrix(gold, predictions))
          
 def main():
     parser = argparse.ArgumentParser()
