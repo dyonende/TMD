@@ -1,5 +1,5 @@
 '''
-@authors: Dyon van der Ende, Eva den Uijl, Myrthe Buckens
+authors: Dyon van der Ende, Eva den Uijl, Myrthe Buckens
 download articles in pdf or plain text
 '''
 import pandas as pd
@@ -62,6 +62,7 @@ def download_and_save(ids_and_links, output_path):
         id = ids[i]
         link = links[i]
         filename = id
+        
         try:            
             r = requests.get(link, stream=True)
             if r.headers['content-type'].find("pdf") > -1:
@@ -74,16 +75,13 @@ def download_and_save(ids_and_links, output_path):
                 content = html_to_text(r.content)
                 with open(output_path+filename, 'w') as outfile:
                     outfile.write(content)
-                
-                
+                                
         except KeyboardInterrupt:
             sys.exit()
         except:
             print(id +" failed to download")
         
         
-          
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file',
@@ -91,11 +89,9 @@ def main():
     parser.add_argument('output_path',
                         help='file path to store pdf\'s')
     args = parser.parse_args()
-    input_file = args.input_file
-    output_path = args.output_path
     
-    check_path(input_file)
-    output_path = check_path(output_path)
+    input_file = check_path(args.input_file)
+    output_path = check_path(args.output_path)
 
     ids_and_links = collect_links(input_file)
     download_and_save(ids_and_links, output_path)
