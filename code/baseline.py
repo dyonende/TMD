@@ -96,7 +96,7 @@ def extract_features(df):
     
     for index, row in df.iterrows():
         feature_dict = {
-            "random" : len(row["abstract"])
+            "random" : 0
         }
         
         features.append(feature_dict)
@@ -131,7 +131,7 @@ def evaluate(predictions, gold):
         print(predictions[i], gold[i])
         
         
-    print(precision_recall_fscore_support(gold, predictions, average='micro'))
+    print(precision_recall_fscore_support(gold, predictions, average='macro'))
     print(confusion_matrix(gold, predictions))
          
 def main():
