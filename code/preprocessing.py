@@ -140,8 +140,8 @@ def write_out(input_file):
     train_df, test_df = train_test_split(input_file, SDGs, ratio)
     
     #writing preprocessed data to file in folder 'data'
-    train_df.to_csv('../data/SDG-training.csv')
-    test_df.to_csv('../data/SDG-test.csv')
+    train_df.to_csv('../data/SDG-training.csv', index=False)
+    test_df.to_csv('../data/SDG-test.csv', index=False)
      
 
 def main():
