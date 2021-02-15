@@ -1,15 +1,13 @@
 '''
 authors: Dyon van der Ende, Eva den Uijl, Myrthe Buckens
 a preprocessing script that takes a csv file as input and creates a training and test dataset.
-
-DISCLAIMER: the training and test data is selected randomly, every time this script is excecuted,
-            different training and test data files are created. 
 '''
 
 import argparse
 import pandas as pd
 
 SDGs = ["03", "14"]
+random_state = 1
 
 new_column_names = {
                     "scopus_abstract_retrieval.coverDate": "retrieval_date",
@@ -119,9 +117,9 @@ def train_test_split(input_file, SDGs, ratio):
         test_df = test_df.append(test_df_list[i], ignore_index=True)
     
     #resetting indices
-    train_df = train_df.sample(frac=1)
+    train_df = train_df.sample(frac=1, random_state=random_state)
     train_df = train_df.reset_index(drop=True)
-    test_df = test_df.sample(frac=1)
+    test_df = test_df.sample(frac=1, random_state=random_state)
     test_df = test_df.reset_index(drop=True)
         
     return train_df, test_df

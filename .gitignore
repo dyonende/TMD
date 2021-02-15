@@ -1,2 +1,5 @@
 papers/
 texts/
+data/SDG-test.csv
+data/SDG-test-predictions.csv
+data/SDG-training.csv
