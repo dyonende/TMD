@@ -43,7 +43,7 @@ with open(path) as infile:
        # print(token_ids)
         tokens_tensor = torch.tensor(token_ids).unsqueeze(0)
 
-        # Get the bert output output
+        # Get output 
         model.eval()  # turn off dropout layers
         output = model(tokens_tensor)
 
