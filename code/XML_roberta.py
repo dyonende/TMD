@@ -5,6 +5,7 @@ and Language as Data Lab 5.3
 """
 
 import pandas as pd 
+import numpy as np
 import torch
 from transformers import XLMTokenizer, XLMWithLMHeadModel
 
