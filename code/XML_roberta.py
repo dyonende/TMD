@@ -26,6 +26,7 @@ with open(path) as infile:
     all_tokens = []
     all_token_ids = []
     
+    n=1
     
     for s in sentences:
         
@@ -51,7 +52,10 @@ with open(path) as infile:
         # This vector corresponds to the last layer of hidden states of bert
         vector = output[0].detach().numpy()[0]
         sentence_vectors.append(vector)
+       
 
         #print(vector.shape)
         #print(vector)
+        
+         n+=1
 
