@@ -41,7 +41,7 @@ with open(path) as infile:
         token_ids = tokenizer.convert_tokens_to_ids(tokens)
         all_token_ids.append(token_ids)
        # print(token_ids)
-        tokens_tensor = torch.tensor(token_ids).unsqueeze(0)
+        tokens_tensor = torch.tensor([1]).unsqueeze(0)
 
         # Get output 
         model.eval()  # turn off dropout layers
