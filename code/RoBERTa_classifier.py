@@ -116,43 +116,7 @@ def create_classifier(train_features, train_targets):
     #fitting the model to the features
     model.fit(features_vectorized, train_targets)
 
-    return model, vec  
-
-def print_confusion_matrix(predictions, goldlabels):
-    '''
-    Function that prints out a confusion matrix
-
-    :param predictions: predicted labels
-    :param goldlabels: gold standard labels
-    :type predictions, goldlabels: list of strings
-
-    :returns: confusion matrix
-    '''
-
-    # based on example from https://datatofish.com/confusion-matrix-python/
-    data = {'Gold': goldlabels, 'Predicted': predictions}
-    df = pd.DataFrame(data, columns=['Gold', 'Predicted'])
-
-    confusion_matrix = pd.crosstab(df['Gold'], df['Predicted'], rownames=['Gold'], colnames=['Predicted'])
-    print(confusion_matrix)
-    return confusion_matrix
-
-
-def print_precision_recall_fscore(predictions, goldlabels, selected_features):
-    '''
-    Function that prints out precision, recall and f-score in a complete report
-
-    :param predictions: predicted output by classifier
-    :param goldlabels: original gold labels
-    :type predictions: list
-    :type goldlabels: list
-    
-    '''
-    report = classification_report(goldlabels,predictions,digits = 3)
-    
-    print('----> SVM with ' + ' and '.join(selected_features) + ' as features <----')
-    print(report)
-    
+    return model, vec     
          
         
 def run_classifier(train_set, test_set, selected_features):
@@ -180,11 +144,6 @@ def run_classifier(train_set, test_set, selected_features):
     test_features = vec.transform(test_features)
     predictions = model.predict(test_features)
     
-    print('CONFUSION MATRIX: ')
-    print_confusion_matrix(predictions, goldlabels)
-    
-    print('METRICS: ')
-    print_precision_recall_fscore(predictions, goldlabels, selected_features)
     
     return predictions
 

@@ -41,6 +41,7 @@ def load_data(input_file):
     
     #dropping duplicates for training purposes 
     df = df.drop_duplicates(subset=["id"], keep=False)
+    df = df.dropna(subset=["abstract"])
     
     #replacing empty cells with empty string 
     df = df.fillna(value="")
