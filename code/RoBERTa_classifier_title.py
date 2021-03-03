@@ -135,11 +135,15 @@ def run_classifier(train_set, test_set, selected_features):
     classifier = pipeline('feature-extraction', model=MODEL_NAME)
     print("train data")
     train_features, train_gold = extract_features(train_set, classifier)
-    print("test data")
-    test_features, goldlabels = extract_features(test_set, classifier)
+    
     
     print("creating classifier")
     model, vec = create_classifier(train_features, train_gold)
+    
+    train_features = None
+    
+    print("test data")
+    test_features, goldlabels = extract_features(test_set, classifier)
     
     test_features = vec.transform(test_features)
     predictions = model.predict(test_features)
@@ -178,7 +182,7 @@ def main():
     #writing the predictions to a new file
     test = pd.read_csv(args.test_set, encoding = 'utf-8', sep = ',')
     test['prediction'] = predictions
-    filename = args.test_set.replace(".csv", "-predictions.csv")
+    filename = args.test_set.replace(".csv", "-predictions_title.csv")
     test.to_csv(filename, sep = ',', index = False)
 
 if __name__ == '__main__':
