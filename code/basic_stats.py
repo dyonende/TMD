@@ -2,6 +2,11 @@ import pandas as pd
 import numpy as np 
 from collections import Counter
 import argparse
+from spacy.lang.en import English
+import statistics
+import matplotlib.pyplot as plt
+
+nlp = English()
 
 def print_statistics(input_file):
     """
@@ -17,6 +22,32 @@ def print_statistics(input_file):
     print('These are the columns in your dataset: ', columns, '\n')
     print('This is the distribution of the labels in your dataset: ', Counter(labels), '\n')
     print('This is the size of your dataset: ', df.shape, '\n')
+    
+    tokenizer = nlp.tokenizer
+    
+    titles = df['title'].values
+    title_lengths = []
+    for title in titles:
+        length = len(tokenizer(title))
+        title_lengths.append(length)
+
+        
+    print("average number of tokens per title:\t"+str(statistics.mean(title_lengths)))
+    
+    plt.ylabel('Tokens' )
+    plt.boxplot(title_lengths)
+    plt.savefig('titleLength')
+    
+    abstracts = df['abstract'].values
+    abstract_lengths = []
+    for abstract in abstracts:
+        length = len(tokenizer(abstract))
+        abstract_lengths.append(length)
+        
+    print("average number of tokens per abstract:\t"+str(statistics.mean(abstract_lengths)))
+    
+    plt.boxplot(abstract_lengths)
+    plt.savefig('abstractLength')
     
 
 def main():
