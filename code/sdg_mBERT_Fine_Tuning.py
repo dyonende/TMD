@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+'''
+adapted from https://colab.research.google.com/drive/1ywsvwO6thOVOrfagjjfuxEf6xVRxbUNO
+'''
+
 import tensorflow as tf
 import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler

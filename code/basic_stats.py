@@ -5,6 +5,7 @@ import argparse
 from spacy.lang.en import English
 import statistics
 import matplotlib.pyplot as plt
+from pytorch_pretrained_bert import BertTokenizer
 
 nlp = English()
 
@@ -23,12 +24,12 @@ def print_statistics(input_file):
     print('This is the distribution of the labels in your dataset: ', Counter(labels), '\n')
     print('This is the size of your dataset: ', df.shape, '\n')
     
-    tokenizer = nlp.tokenizer
+    tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased')
     
     titles = df['title'].values
     title_lengths = []
     for title in titles:
-        length = len(tokenizer(title))
+        length = len(tokenizer.tokenize(title))
         title_lengths.append(length)
 
         
@@ -41,7 +42,7 @@ def print_statistics(input_file):
     abstracts = df['abstract'].values
     abstract_lengths = []
     for abstract in abstracts:
-        length = len(tokenizer(abstract))
+        length = len(tokenizer.tokenize(abstract))
         abstract_lengths.append(length)
         
     print("average number of tokens per abstract:\t"+str(statistics.mean(abstract_lengths)))
