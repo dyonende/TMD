@@ -98,7 +98,7 @@ def extract_features(df, classifier):
         current_row+=1
         
     print()
-    return features, gold  
+    return np.array(features), np.array(gold)
 
 def create_classifier(train_features, train_targets):
     """

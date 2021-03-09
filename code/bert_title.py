@@ -5,21 +5,17 @@ a simple SDG classifier
 Based on https://github.com/cltl/ma-ml4nlp-labs/blob/main/code/assignment1/basic_system.ipynb
 
 '''
-import sys
+
 import argparse
+import sys
 import os
 import pandas as pd
 import numpy as np
+from sklearn.feature_extraction import DictVectorizer
 import torch
-from transformers import AutoTokenizer, pipeline
-from sklearn.linear_model import SGDClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
-
-MODEL_NAME = 'xlm-roberta-base' #huggingface transformers model
-MAX_LEN = 300                   #max token length of abstract
-STEP_SIZE = 1                   #short abstract by STEP_SIZE until MAX_LEN tokens
-                                #higher value is faster feature extraction
+from transformers import BertModel, BertTokenizer
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
 
 
 def read_data(path):
@@ -54,7 +50,7 @@ def check_path(path):
     return path
     
     
-def extract_features(df, classifier):
+def extract_features(df, selected_features):
     """
     Function to extract features from data.
     
@@ -62,45 +58,25 @@ def extract_features(df, classifier):
     :returns: the selected features and the gold labels in the data
     
     """
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-    
     gold = []
     features = []
-     
-    num_rows = df.shape[0]
-    current_row = 1
+    title_list = []
+    
+    #mapping features to matching columns
+    feature_to_index = {'retrieval_date': 0, 'id': 1, 'SDG_label': 2, 'target_label': 3, 'title': 4}
+    
     for index, row in df.iterrows():
-        #print progress
-        print(f'feature extraction: \t{str(current_row/num_rows*100)[:4]}%', end='\r')
-        
-        abstract = row['abstract']       
-
-        #decrease abstract length until max number of tokens is reached
-        while len(tokenizer.tokenize(abstract)) > MAX_LEN -2:
-            abstract = abstract[:-STEP_SIZE]
-        
-        
-        abstract_features = classifier(abstract)
-        abstract_len = len(abstract_features[0])
-                                       
-        abstract_vector = abstract_features[0]
-        vector_length = len(abstract_vector[0])
-
-        for i in range(abstract_len, MAX_LEN):
-            abstract_vector.append(vector_length*[0])
-        
-        out = np.array(abstract_vector).flatten()
-
-        assert len(abstract_vector) == MAX_LEN, "too much tokens"
-
-        features.append(out)  
+        feature_dict = {}
+        for feature_name in selected_features:
+            #components_index = feature_to_index.get(feature_name)
+            feature_dict[feature_name] = row[feature_name]
+        features.append(feature_dict)  
+        title_list.append(row['title'])
         gold.append(row['SDG_label'])
-        current_row+=1
         
-    print()
-    return np.array(features), np.array(gold)
+    return features, gold, title_list  
 
-def create_classifier(train_features, train_targets):
+def create_classifier(train_features, train_targets, title_list):
     """
     Function to create a classifier. Variable 'model' denotes type of classifier.
     
@@ -112,42 +88,62 @@ def create_classifier(train_features, train_targets):
     
     """
     #selected model and vectorizer
-    model = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, tol=1e-3, verbose=1))
+    MODEL_NAME = 'bert-base-uncased'
+    model = BertModel.from_pretrained(MODEL_NAME)
+    tokenizer = BertTokenizer.from_pretrained(MODEL_NAME)
 
-    print("fitting model")
-       
-    model.fit(train_features, train_targets)
+    sentence_vectors = []
+    all_tokens = []
+    all_token_ids = []
+    
+    for title in title_list: 
+        # Use the bert tokenizer
+        tokens = [tokenizer.cls_token] + tokenizer.tokenize(title) + [tokenizer.sep_token]
+        all_tokens.append(tokens)
 
-    return model     
+        # Convert the tokens to token ids
+        token_ids = tokenizer.convert_tokens_to_ids(tokens)
+        all_token_ids.append(token_ids)
+        tokens_tensor = torch.tensor(token_ids).unsqueeze(0)
+
+        # Get the bert output
+        model.eval()  # turn off dropout layers
+        output = model(tokens_tensor)
+
+        # The model provides a vector of 768 dimensions for each token
+        # This vector corresponds to the last layer of hidden states of bert
+        vector = output[0].detach().numpy()[0]
+        sentence_vectors.append(vector)
+
+    
+    #fitting the model to the features
+    model.fit(sentence_vectors, train_targets)
+
+    return model, vec  
+
          
         
-def run_classifier(train_set, test_set):
+def run_classifier(train_set, test_set, selected_features):
     """
     Function to run the classifier and get the predicted labels. 
     
     :param train_set: training data 
     :param test_set: test data
+    :param selected_features: the selected features for training the model
     :type train_set: pandas dataframe
     :type test_set: pandas dataframe
+    :type selected_features: list 
     :return: predictions (list with predicted labels)
     
     """
     
-    classifier = pipeline('feature-extraction', model=MODEL_NAME)
+    train_features, train_gold, titles = extract_features(train_set, selected_features)
+    test_features, goldlabels, test_titles = extract_features(test_set, selected_features)
     
-    print("train data")
-    train_features, train_gold = extract_features(train_set, classifier)
+    model, vec = create_classifier(train_features, train_gold, titles)
     
-    
-    model = create_classifier(train_features, train_gold)
-    
-    train_features = None
-    
-    print("test data")
-    test_features, goldlabels = extract_features(test_set, classifier)
-    
+    test_features = vec.transform(test_features)
     predictions = model.predict(test_features)
-    
     
     return predictions
 
@@ -164,8 +160,6 @@ def main():
 
     args = parser.parse_args()
     
-    print("preparing")
-    
     #checking paths for arguments 
     train_set = check_path(args.train_set)
     test_set = check_path(args.test_set)
@@ -175,13 +169,16 @@ def main():
     train_set = read_data(train_set)
     test_set = read_data(test_set)
     
+    #selected features for training
+    selected_features = ['title']
+    
     #running classifier and generating statistics on performance 
-    predictions = run_classifier(train_set, test_set)
+    predictions = run_classifier(train_set, test_set, selected_features)
     
     #writing the predictions to a new file
     test = pd.read_csv(args.test_set, encoding = 'utf-8', sep = ',')
     test['prediction'] = predictions
-    filename = args.test_set.replace(".csv", "-predictions_abstract.csv")
+    filename = args.test_set.replace(".csv", "-predictions-bert_title.csv")
     test.to_csv(filename, sep = ',', index = False)
 
 if __name__ == '__main__':

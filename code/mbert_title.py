@@ -88,7 +88,7 @@ def create_classifier(train_features, train_targets, title_list):
     
     """
     #selected model and vectorizer
-    MODEL_NAME = 'bert-base-uncased'
+    MODEL_NAME = 'bert-base-multilingual-uncased'
     model = BertModel.from_pretrained(MODEL_NAME)
     tokenizer = BertTokenizer.from_pretrained(MODEL_NAME)
 
@@ -178,7 +178,7 @@ def main():
     #writing the predictions to a new file
     test = pd.read_csv(args.test_set, encoding = 'utf-8', sep = ',')
     test['prediction'] = predictions
-    filename = args.test_set.replace(".csv", "-predictions-bert.csv")
+    filename = args.test_set.replace(".csv", "-predictions-mbert_title.csv")
     test.to_csv(filename, sep = ',', index = False)
 
 if __name__ == '__main__':
