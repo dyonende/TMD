@@ -16,14 +16,19 @@ In the data folder, you will find the following files:
 
 
 ### code
-In the code folder, you will find the following files: 
-* 
+In the code folder, you will find the following scripts: 
+* baseline system: `baseline.py`
+* preprocessing script: `preprocessing.py`
+* basic statistics on the data: `basic_stats.py`
+* RoBERTa classifier with abstracts: `RoBERTa_classifier_abstract.py`
+* RoBERTa classifier with titles: `RoBERTa_classifier_title.py`
+* evaluation script: `evaluation.py`
 
 For running the mBERT models, we used google colaboration. It is possible to download this code on top of the page as .ipynb or .py, but for speed and possible hardware limitations, we advise you run the code online with the CPU from google. 
 The code can be found by following the links below: 
-* mBERT title: https://colab.research.google.com/drive/15GPBozxuIhkKkZumHa-fs8lYR98QiDm8?usp=sharing
-* mBERT abstract: https://colab.research.google.com/drive/1WZa20GjK1KDPhbPMR945y7f6Hvp2Tx_z?usp=sharing
-* mBERT abstract + title: https://colab.research.google.com/drive/1hTiPH8Vh9kOAruSdgWYLlr64CS_fR1IW?usp=sharing
-* mBERT all SDG's: https://colab.research.google.com/drive/1lHlTAh8GKA7BBYXH8Xg92dNStbj7HaRJ?usp=sharing
+* mBERT with titles: https://colab.research.google.com/drive/15GPBozxuIhkKkZumHa-fs8lYR98QiDm8?usp=sharing
+* mBERT with abstracts: https://colab.research.google.com/drive/1WZa20GjK1KDPhbPMR945y7f6Hvp2Tx_z?usp=sharing
+* mBERT with abstracts + titles: https://colab.research.google.com/drive/1hTiPH8Vh9kOAruSdgWYLlr64CS_fR1IW?usp=sharing
+* mBERT with all SDG's: https://colab.research.google.com/drive/1lHlTAh8GKA7BBYXH8Xg92dNStbj7HaRJ?usp=sharing
 
 
