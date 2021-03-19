@@ -4,6 +4,12 @@ Students: Myrthe Buckens, Dyon van der Ende and Eva den Uijl
 
 ### data 
 In the data folder, you will find the following files: 
+* original data file: `SDG-1-17-basic-excl-target13.0.csv`
+* preprocessed training data with 2 SDG's and negative class: `SDG-training.csv`
+* preprocessed test data with 2 SDG's and negative class: `SDG-test.csv`
+* preprocessed training data with all SDG's: `SDG-training-all.csv`
+* preprocessed test data with all SDG's: `SDG-test-all.csv`
+
 
 
 ### requirements 
