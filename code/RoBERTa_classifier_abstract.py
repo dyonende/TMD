@@ -62,8 +62,10 @@ def extract_features(df, classifier):
     :returns: the selected features and the gold labels in the data
     
     """
+    # initializing tokenizer 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     
+    # creating lists for gold data and features
     gold = []
     features = []
      
@@ -132,13 +134,12 @@ def run_classifier(train_set, test_set):
     :return: predictions (list with predicted labels)
     
     """
-    
+    # setting up classifier
     classifier = pipeline('feature-extraction', model=MODEL_NAME)
     
     print("train data")
     train_features, train_gold = extract_features(train_set, classifier)
-    
-    
+   
     model = create_classifier(train_features, train_gold)
     
     train_features = None
@@ -146,6 +147,7 @@ def run_classifier(train_set, test_set):
     print("test data")
     test_features, goldlabels = extract_features(test_set, classifier)
     
+    # getting predictions
     predictions = model.predict(test_features)
     
     
