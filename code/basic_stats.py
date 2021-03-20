@@ -2,12 +2,10 @@ import pandas as pd
 import numpy as np 
 from collections import Counter
 import argparse
-from spacy.lang.en import English
 import statistics
 import matplotlib.pyplot as plt
 from pytorch_pretrained_bert import BertTokenizer
 
-nlp = English()
 
 def print_statistics(input_file):
     """
@@ -24,6 +22,15 @@ def print_statistics(input_file):
     print('This is the distribution of the labels in your dataset: ', Counter(labels), '\n')
     print('This is the size of your dataset: ', df.shape, '\n')
     
+    return df
+    
+def create_plots(df):
+    """
+    Function to create boxplots based on the statistics of the input file
+    :param df: dataframe with input data 
+    :type df: pandas dataframe 
+    
+    # initializing tokenizer from BERT multilingual model 
     tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased')
     
     titles = df['title'].values
@@ -32,9 +39,10 @@ def print_statistics(input_file):
         length = len(tokenizer.tokenize(title))
         title_lengths.append(length)
 
-        
+    # printing statistics on tokens per title     
     print("average number of tokens per title:\t"+str(statistics.mean(title_lengths)))
     
+    # creating boxplot for token distribution in title
     plt.ylabel('Tokens' )
     plt.boxplot(title_lengths)
     plt.savefig('titleLength')
@@ -44,9 +52,11 @@ def print_statistics(input_file):
     for abstract in abstracts:
         length = len(tokenizer.tokenize(abstract))
         abstract_lengths.append(length)
-        
+    
+    # printing statistics on tokens per abstract 
     print("average number of tokens per abstract:\t"+str(statistics.mean(abstract_lengths)))
     
+    # creating boxplot for token distribution in abstract
     plt.boxplot(abstract_lengths)
     plt.savefig('abstractLength')
     
@@ -58,7 +68,9 @@ def main():
     args = parser.parse_args()
     input_file = args.input_file
 
-    print_statistics(input_file)
+    df = print_statistics(input_file)
+    create_plots(df) 
+    
 
 if __name__ == '__main__':
     main()
