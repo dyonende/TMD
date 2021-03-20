@@ -62,8 +62,10 @@ def extract_features(df, classifier):
     :returns: the selected features and the gold labels in the data
     
     """
+    #initializing tokenizer 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     
+    #creating lists for gold data and features
     gold = []
     features = []
      
@@ -80,7 +82,7 @@ def extract_features(df, classifier):
             title = title[:-STEP_SIZE]
         
         
-        title_features = classifier(title)  #vectorise title by BERT model
+        title_features = classifier(title)  #vectorize title by RoBERTa model
         title_len = len(title_features[0])
                                        
         title_vector = title_features[0]
