@@ -29,6 +29,7 @@ def create_plots(df):
     Function to create boxplots based on the statistics of the input file
     :param df: dataframe with input data 
     :type df: pandas dataframe 
+    """
     
     # initializing tokenizer from BERT multilingual model 
     tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased')
