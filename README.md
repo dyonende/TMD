@@ -16,7 +16,8 @@ In the data folder, you will find the following files:
 
 
 ### requirements 
-
+The needed requirements can be found in `requirements.txt` and installed by running
+```pip install requirements.txt``` from your terminal.
 
 ### code
 In the code folder, you will find the following scripts: 
