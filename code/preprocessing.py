@@ -7,8 +7,14 @@ import argparse
 import pandas as pd
 
 SDGs = ["03", "14"]
+
+# change the SDGs list to the list below to create the preprocessed file with all SDGs 
+# or modify the list to use only the SDGs you are interested in 
+# SDGs = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17"]
+
 random_state = 1
 
+# dict with new, more informative, column names 
 new_column_names = {
                     "scopus_abstract_retrieval.coverDate": "retrieval_date",
                     "_id": "id",
@@ -72,6 +78,7 @@ def create_negative_class(df, SDGs):
     :return: pandas dataframe with selected SDGs data and a negative class
     
     """
+    # changing SDG label to zero to create a negative class when not using all SDGs 
     df.loc[~df['SDG_label'].isin(SDGs), 'SDG_label'] = '0' 
     return df
 
@@ -139,6 +146,8 @@ def write_out(input_file):
     train_df, test_df = train_test_split(input_file, SDGs, ratio)
     
     #writing preprocessed data to file in folder 'data'
+    # !!! change file names if you do not wish to overwrite excisting files
+    
     train_df.to_csv('../data/SDG-training.csv', index=False)
     test_df.to_csv('../data/SDG-test.csv', index=False)
      
