@@ -12,7 +12,7 @@ In the data folder, you will find the following files:
 * file with predictions for baseline: `SDG-predictions-baseline.csv`
 * file with predictions for RoBERTa on title: `SDG-predictions-title.csv`
 * file with predictions for RoBERTa on abstract: `SDG-predictions-abstract.csv`
-* file with predictions for mBERT on abstract: `SDG-predictions-mBERT-abstract.csv`
+* file with predictions for mBERT on abstract: `SDG-predictions-mBERT-abstract.csv` (best performing model)
 
 ### requirements 
 The needed requirements can be found in `requirements.txt` and installed by running
