@@ -1,8 +1,6 @@
 '''
 authors: Dyon van der Ende, Eva den Uijl, Myrthe Buckens
-a simple SDG classifier
-
-Based on https://github.com/cltl/ma-ml4nlp-labs/blob/main/code/assignment1/basic_system.ipynb
+a simple majority baseline as SDG classifier
 
 '''
 
@@ -10,16 +8,6 @@ import argparse
 import sys
 import os
 import pandas as pd
-import numpy as np
-from sklearn.feature_extraction import DictVectorizer
-from sklearn import svm
-import torch
-from transformers import AutoModel, AutoTokenizer, pipeline
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-
-MODEL_NAME = 'xlm-roberta-base'
-
 
 def read_data(path):
     """
@@ -68,6 +56,8 @@ def main():
     
     #writing the predictions to a new file
     test = pd.read_csv(args.test_set, encoding = 'utf-8', sep = ',')
+    
+    #predicting the majority class for all instances
     test['prediction'] = 0
     filename = args.test_set.replace(".csv", "-predictions_baseline.csv")
     test.to_csv(filename, sep = ',', index = False)
