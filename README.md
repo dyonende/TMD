@@ -9,6 +9,9 @@ In the data folder, you will find the following files:
 * preprocessed test data with 2 SDG's and negative class: `SDG-test.csv`
 * preprocessed training data with all SDG's: `SDG-training-all.csv`
 * preprocessed test data with all SDG's: `SDG-test-all.csv`
+* file with predictions for baseline: `SDG-predictions-baseline.csv`
+* file with predictions for RoBERTa on title: `SDG-predictions-title.csv`
+* file with predictions for RoBERTa on abstract: `SDG-predictions-abstract.csv`
 
 
 
