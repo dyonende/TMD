@@ -12,7 +12,6 @@ In the data folder, you will find the following files:
 * file with predictions for baseline: `SDG-predictions-baseline.csv`
 * file with predictions for RoBERTa on title: `SDG-predictions-title.csv`
 * file with predictions for RoBERTa on abstract: `SDG-predictions-abstract.csv`
-* file with predictions for mBERT on abstract: `SDG-predictions-mBERT-abstract.csv` (best performing model)
 
 ### requirements 
 The needed requirements can be found in `requirements.txt` and installed by running
@@ -27,7 +26,7 @@ In the code folder, you will find the following scripts:
 * RoBERTa classifier with titles: `RoBERTa_classifier_title.py`
 * evaluation script: `evaluation.py`
 
-For running the mBERT models, we used google colaboration. It is possible to download this code on top of the page as .ipynb or .py, but for speed and possible hardware limitations, we advise you run the code online with the CPU from google. 
+For running the mBERT models, we used google colaboration. It is possible to download this code on top of the page as .ipynb or .py, but for speed and possible hardware limitations, we advise you run the code online with the GPU from google. 
 The code can be found by following the links below: 
 * mBERT with titles: https://colab.research.google.com/drive/15GPBozxuIhkKkZumHa-fs8lYR98QiDm8?usp=sharing
 * mBERT with abstracts: https://colab.research.google.com/drive/1WZa20GjK1KDPhbPMR945y7f6Hvp2Tx_z?usp=sharing
