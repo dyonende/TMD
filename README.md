@@ -14,8 +14,8 @@ In the data folder, you will find the following files:
 * file with predictions for RoBERTa on abstract: `SDG-predictions-abstract.csv`
 
 ### requirements 
-The needed requirements can be found in `requirements.txt` and installed by running
-```pip install requirements.txt``` from your terminal.
+The needed requirements can be found in `requirements` and installed by running
+```pip install requirements``` from your terminal.
 
 ### code
 In the code folder, you will find the following scripts: 
