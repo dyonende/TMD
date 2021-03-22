@@ -8,6 +8,9 @@ import argparse
 import sys
 import os
 import pandas as pd
+import random
+
+random.seed(3)
 
 def read_data(path):
     """
@@ -57,8 +60,14 @@ def main():
     #writing the predictions to a new file
     test = pd.read_csv(args.test_set, encoding = 'utf-8', sep = ',')
     
-    #predicting the majority class for all instances
-    test['prediction'] = 0
+    #predicting random label class for all instances
+    labels = [0, 3, 14]
+    
+    predictions = []
+    for _ in range(len(test)):
+        predictions.append(random.choice(labels))
+    
+    test['prediction'] = predictions
     filename = args.test_set.replace(".csv", "-predictions_baseline.csv")
     test.to_csv(filename, sep = ',', index = False)
 
