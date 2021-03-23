@@ -4,4 +4,4 @@ sklearn==0.24.1
 transformers==4.4.2
 torch==1.8.0
 spacy==2.3.2
-spacy download en_core_web_sm
+
