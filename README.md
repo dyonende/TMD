@@ -25,6 +25,7 @@ In the code folder, you will find the following scripts:
 * RoBERTa classifier with abstracts: `RoBERTa_classifier_abstract.py`
 * RoBERTa classifier with titles: `RoBERTa_classifier_title.py`
 * evaluation script: `evaluation.py`
+* script for error analysis: `error.py`
 
 For running the mBERT models, we used google colaboration. It is possible to download this code on top of the page as .ipynb or .py, but for speed and possible hardware limitations, we advise you run the code online with the GPU from google. 
 The code can be found by following the links below: 
