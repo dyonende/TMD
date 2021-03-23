@@ -52,6 +52,7 @@ str0as14 = ""
 str14good = ""
 str3good = ""
 
+
 #concatenating all abstracts into one string per category
 for abstracts in list14as0:
     str14as0 += abstracts + " "
@@ -71,60 +72,19 @@ for abstracts in list3good:
 for abstracts in list14good:
     str14good += abstracts + " "
 
-    
-print('-----------------3 PREDICTED AS 0------------------')
-lemmas3as0 = []
-doc = nlp(str3as0)
 
-#appending lemmas to cleaned list when lemma is not punctuation mark or on stopword list for English
-lemmas3as0.append([token.lemma_ for token in doc if (token.is_punct == False and token.is_stop == False)])
-for lemmalist in lemmas3as0:
-    print(Counter(lemmalist).most_common(20))
+#list with all strings 
+abstractlist = [str14as0, str3as0, str0as3, str0as14, str14good, str3good]
 
+#list with prediction names to keep track
+predictions_label = ['3 PREDICTED AS 0', '14 PREDICTED AS 0', '0 PREDICTED AS 3', '0 PREDICTED AS 14', '3 PREDICTED GOOD', '14 PREDICTED GOOD']
 
-print('-----------------14 PREDICTED AS 0------------------')
-lemmas14as0 = []
-doc = nlp(str14as0)
+for abstracts, prediction in zip(abstractlist, predictions_label): 
+    print('-----------------', prediction, '------------------')
+    lemmas = []
+    doc = nlp(abstracts)
+    lemmas.append([token.lemma_ for token in doc if (token.is_punct == False and token.is_stop == False)])
+    for lemmalist in lemmas:
+        print(Counter(lemmalist).most_common(20))
 
-#appending lemmas to cleaned list when lemma is not punctuation mark or on stopword list for English
-lemmas14as0.append([token.lemma_ for token in doc if (token.is_punct == False and token.is_stop == False)])
-for lemmalist in lemmas14as0:
-    print(Counter(lemmalist).most_common(20))
-    
-
-print('-----------------0 PREDICTED AS 3------------------')
-lemmas0as3 = []
-doc = nlp(str0as3)
-
-#appending lemmas to cleaned list when lemma is not punctuation mark or on stopword list for English
-lemmas0as3.append([token.lemma_ for token in doc if (token.is_punct == False and token.is_stop == False)])
-for lemmalist in lemmas0as3:
-    print(Counter(lemmalist).most_common(20))
-
-print('-----------------0 PREDICTED AS 14------------------')
-lemmas0as14 = []
-doc = nlp(str0as14)
-
-#appending lemmas to cleaned list when lemma is not punctuation mark or on stopword list for English
-lemmas0as14.append([token.lemma_ for token in doc if (token.is_punct == False and token.is_stop == False)])
-for lemmalist in lemmas0as14:
-    print(Counter(lemmalist).most_common(20)))
-
-
-print('-----------------3 PREDICTED GOOD------------------')
-lemmas3good = []
-doc = nlp(str3good)
-
-#appending lemmas to cleaned list when lemma is not punctuation mark or on stopword list for English
-lemmas3good.append([token.lemma_ for token in doc if (token.is_punct == False and token.is_stop == False)])
-for lemmalist in lemmas3good:
-    print(Counter(lemmalist).most_common(20))
-
-print('-----------------14 PREDICTED GOOD------------------')
-lemmas14good = []
-doc = nlp(str14good)
-
-#appending lemmas to cleaned list when lemma is not punctuation mark or on stopword list for English
-lemmas14good.append([token.lemma_ for token in doc if (token.is_punct == False and token.is_stop == False)])
-for lemmalist in lemmas14good:
-    print(Counter(lemmalist).most_common(20))
+        
