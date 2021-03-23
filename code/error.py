@@ -8,6 +8,9 @@ import pandas as pd
 import spacy
 from collections import Counter
 from spacy.lang.en.stop_words import STOP_WORDS
+from spacy.cli.download import download
+
+download('en_core_web_sm')
 
 # English pipelines include a rule-based lemmatizer
 nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
