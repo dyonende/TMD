@@ -18,14 +18,13 @@ The needed requirements can be found in `requirements` and installed by running
 ```pip install requirements``` from your terminal.
 
 ### code
-In the code folder, you will find the following scripts: 
-* baseline system: `baseline.py`
-* preprocessing script: `preprocessing.py`
-* basic statistics on the data: `basic_stats.py`
-* RoBERTa classifier with abstracts: `RoBERTa_classifier_abstract.py`
-* RoBERTa classifier with titles: `RoBERTa_classifier_title.py`
-* evaluation script: `evaluation.py`
-* script for error analysis: `error.py`
+In the code folder, you will find the following scripts, to be run with the specified arguments: 
+* baseline system: `baseline.py` \<test data\> \<output location\>
+* preprocessing script: `preprocessing.py` \<data set\>
+* basic statistics on the data: `basic_stats.py` \<data set\>
+* RoBERTa classifier with abstracts: `RoBERTa_classifier_abstract.py` \<train data\>  \<test data\> \<output location\>
+* RoBERTa classifier with titles: `RoBERTa_classifier_title.py`  \<train data\> \<test data\> \<output location\>
+* evaluation script: `evaluation.py` \<classifier predictions\>
 
 For running the mBERT models, we used google colaboration. It is possible to download this code on top of the page as .ipynb or .py, but for speed and possible hardware limitations, we advise you run the code online with the GPU from google. 
 The code can be found by following the links below: 
